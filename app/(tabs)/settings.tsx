@@ -1,65 +1,36 @@
 import { Button, Text, StyleSheet, View, TextInput } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
+import { save, getValueFor } from '../../components/storage'
+import { useSettings } from '../../store/useSettings';
 
-
-async function save(key: string, value: string) {
-    try {
-        await SecureStore.setItemAsync(key, value);
-    } catch (e) {
-        alert(e);
-    }
-}
-
-async function getValueFor(key: string) {
-    let result = await SecureStore.getItemAsync(key);
-    if (result) {
-        return result;
-    } 
-}
 
 export default function SettingsScreen() {
     const [interval, setInterval] = useState<string>("30");
     const [timerLength, setTimerLength] = useState<string>("60");
     const [title, setTitle] = useState<string>("Reminder");
     const [body, setBody] = useState<string>("Stay active!");
+    const updateSettings = useSettings((state) => state.setVals)
+    const intervalState = useSettings((state) => state.interval)
+    const timerLengthState = useSettings((state) => state.timerLength)
+    const titleState = useSettings((state) => state.title)
+    const bodyState = useSettings((state) => state.body)
+
 
     async function onSave() {
+        updateSettings(interval, timerLength, title, body);
         save("interval", interval);
         save("timerLength", timerLength);
         save("title", title);
         save("body", body);
     }
 
-    async function getCurrentVals() {
-        try {
-            const storedInterval = await getValueFor("interval");
-            const storedTimerLength = await getValueFor("timerLength");
-            const storedTitle = await getValueFor("title");
-            const storedBody = await getValueFor("body");
-            
-            if (storedInterval) {
-                setInterval(storedInterval)
-            }
-            if (storedTimerLength) {
-                setTimerLength(storedTimerLength)
-            }
-            if (storedTitle) {
-                setTitle(storedTitle)
-            }
-            if (storedBody) {
-                setBody(storedBody)
-            }
-            
-            return [storedInterval, storedTimerLength, storedTitle, storedBody]
-        } catch (e) {
-            alert(e);
-        }
-    }
-
     useEffect(() => {
-        getCurrentVals();
-    }, []);
+        setInterval(intervalState)
+        setTimerLength(timerLengthState)
+        setTitle(titleState)
+        setBody(bodyState)
+    }, [intervalState, timerLengthState, titleState, bodyState])
 
     return (
         <View style={{width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
@@ -100,6 +71,7 @@ export default function SettingsScreen() {
                 style={styles.textInput}
             ></TextInput>
             <Button title="SAVE" onPress={() => onSave()}></Button>
+            <Text style={styles.text}>{titleState}</Text>
         </View>
     )
 }
