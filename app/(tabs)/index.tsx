@@ -39,9 +39,11 @@ export default function HomeScreen() {
             
             setActive(storedActive === "true");
             
-            updateSettings(storedInterval, storedTimerLength, storedTitle, storedBody)
-            
-            return [storedActive, storedInterval, storedTitle, storedBody]
+            if (storedInterval && storedTimerLength && storedTitle && storedBody) {
+                updateSettings(storedInterval, storedTimerLength, storedTitle, storedBody);
+            } else {
+                updateSettings("30", "60", "Reminder", "Stay active!");
+            }
         } catch (e) {
             alert(e);
         }
