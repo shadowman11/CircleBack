@@ -1,8 +1,9 @@
-import { Button, Text, StyleSheet, View, TextInput } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
-import * as SecureStore from 'expo-secure-store';
-import { save, getValueFor } from '../../components/storage'
-import { useSettings } from '../../store/useSettings';
+import { useEffect, useState } from 'react';
+import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { save } from '../../components/storage';
+import { useSettings } from '../../components/useSettings';
+import { styles } from '@/components/styles'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 export default function SettingsScreen() {
@@ -33,7 +34,7 @@ export default function SettingsScreen() {
     }, [intervalState, timerLengthState, titleState, bodyState])
 
     return (
-        <View style={{width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <View style={[styles.container, {justifyContent: "flex-start", paddingTop: 70}]}>
             <Text style={styles.title}>Notification Interval:</Text>
             <View style={{display: "flex", flexDirection: "row"}}>
                 <TextInput 
@@ -43,7 +44,7 @@ export default function SettingsScreen() {
                     maxLength={3}
                     style={styles.textInput}
                 ></TextInput>
-                <Text style={styles.text}>minutes</Text>
+                <Text style={styles.text}>{interval === "1" ? "minute" : "minutes"}</Text>
             </View>
             <Text style={styles.title}>Timer Length:</Text>
             <View style={{display: "flex", flexDirection: "row"}}>
@@ -60,49 +61,19 @@ export default function SettingsScreen() {
             <TextInput
                 onChangeText={(text) => setTitle(text)}
                 value={title}
-                maxLength={100}
+                maxLength={50}
                 style={styles.textInput}
             ></TextInput>
             <Text style={styles.title}>Notification Body:</Text>
-            <TextInput
+            <View><TextInput
                 onChangeText={(text) => setBody(text)}
                 value={body}
-                maxLength={100}
+                maxLength={50}
                 style={styles.textInput}
-            ></TextInput>
-            <Button title="SAVE" onPress={() => onSave()}></Button>
-            <Text style={styles.text}>{titleState}</Text>
+            ></TextInput></View>
+            <Pressable style={styles.actionButton} onPress={() => onSave()}>
+                <Text style={styles.buttonText}>SAVE</Text>
+            </Pressable>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingTop: 10,
-        backgroundColor: '#ecf0f1',
-        padding: 8,
-    },
-    title: {
-        marginTop: 30,
-        margin: 10,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: "white"
-    },
-    text: {
-        margin: 10,
-        fontSize: 16,
-        color: "#eeeeee"
-    },
-    textInput: {
-        height: 35,
-        borderColor: 'gray',
-        borderWidth: 0.5,
-        padding: 4,
-        width: 100,
-        color: 'white'
-    },
-});

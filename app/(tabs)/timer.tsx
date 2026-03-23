@@ -1,9 +1,10 @@
-import { Text, Button, Platform, StyleSheet, View } from 'react-native';
+import { Text, Button, Platform, StyleSheet, View, Pressable } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { getValueFor } from '../../components/storage'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
-import { useSettings } from '@/store/useSettings';
+import { useSettings } from '@/components/useSettings';
+import { styles } from '@/components/styles'
 
 
 export default function TimerScreen() {
@@ -19,28 +20,28 @@ export default function TimerScreen() {
 
     return (
         <View style={styles.container}>
+            <View style={[styles.actionButton, {borderWidth: 0, backgroundColor: "#ffffff00",}]}></View>
             <CountdownCircleTimer
                 key={key}
                 isPlaying={isPlaying}
                 duration={Number(timerLength)}
-                colors={'#004777'}
+                colors={["#ff9500", "#55aa33"]}
+                colorsTime={[Number(timerLength), 0]}
+                trailColor="#444444"
                 onComplete={() => onReset()}
+                size={270}
+                strokeWidth={5}
             >
-                {({ remainingTime }) => <Text>{remainingTime}</Text>}
+                {({ remainingTime }) => <Text style={styles.largeText}>{remainingTime}</Text>}
             </CountdownCircleTimer>
-            <Button title={isPlaying ? "Pause" : "Start"} onPress={() => setIsPlaying(!isPlaying)} />
-            <Button title="Reset" onPress={() => onReset()} />
+            <View style={{display: "flex", flexDirection: "row"}}>
+                <Pressable style={[styles.actionButton, {borderColor: "#ff9500", backgroundColor: "#ff950010"}]} onPress={() => onReset()}>
+                    <Text style={styles.buttonText}>RESET</Text>
+                </Pressable>
+                <Pressable style={styles.actionButton} onPress={() => setIsPlaying(!isPlaying)}>
+                    <Text style={styles.buttonText}>{isPlaying ? "PAUSE" : "START"}</Text>
+                </Pressable>
+            </View>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8,
-    color: "white",
-    backgroundColor: "#202020"
-  }
-});

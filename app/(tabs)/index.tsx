@@ -1,10 +1,10 @@
-import { Text, Button, Platform, StyleSheet, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { useEffect, useRef, useState } from 'react';
-import * as SecureStore from 'expo-secure-store';
-import { save, getValueFor } from '../../components/storage';
 import { useRouter } from 'expo-router';
-import { useSettings } from '../../store/useSettings';
+import { useEffect, useState } from 'react';
+import { Pressable, Platform, Text, View } from 'react-native';
+import { getValueFor, save } from '../../components/storage';
+import { useSettings } from '../../components/useSettings';
+import { styles } from '@/components/styles'
 
 
 Notifications.setNotificationHandler({
@@ -107,43 +107,10 @@ export default function HomeScreen() {
     }
 
     return (
-        <View style={{width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <View>
-                <Button title={active ? "TURN OFF" : "TURN ON"} onPress={() => onToggleActive()} />
-            </View>
-            <Text style={styles.text}>{Number(interval)}</Text>
-            <Text style={styles.text}>{title}</Text>
-            <Text style={styles.text}>{body}</Text>
+        <View style={styles.container}>
+            <Pressable style={active ? styles.activeButton : styles.inactiveButton}  onPress={() => onToggleActive()}>
+                <Text style={styles.largeText}>{active ? "ON" : "OFF"}</Text>
+            </Pressable>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingTop: 10,
-        backgroundColor: '#ecf0f1',
-        padding: 8,
-    },
-    title: {
-        marginTop: 30,
-        margin: 10,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: "white"
-    },
-    text: {
-        margin: 10,
-        fontSize: 16,
-        color: "#eeeeee"
-    },
-    textInput: {
-        height: 35,
-        borderColor: 'gray',
-        borderWidth: 0.5,
-        padding: 4,
-        width: 100
-    },
-});

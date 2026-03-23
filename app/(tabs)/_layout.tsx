@@ -1,40 +1,40 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: "#ffffff",
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarStyle: {
+          backgroundColor: '#171717fa',
+          height: 60,
+          paddingHorizontal: 10,
+          borderTopWidth: 0,
+        },
       }}>
       <Tabs.Screen
         name="timer"
         options={{
-          title: 'Timer',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: '',
+          tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? 'time-sharp' : 'time-outline'} color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: '',
+          tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: '',
+          tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? 'settings-sharp' : 'settings-outline'} color={color} size={24} />,
         }}
       />
     </Tabs>
