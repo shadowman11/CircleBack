@@ -8,7 +8,7 @@ import { styles } from '@/components/styles'
 export default function SettingsScreen() {
     const [interval, setInterval] = useState<string>("30"); // Interval between notification sends.
     const [timerLength, setTimerLength] = useState<string>("60"); // Length of timer.
-    const [title, setTitle] = useState<string>("Reminder"); // Title of notification.
+    const [title, setTitle] = useState<string>("Time to circle back"); // Title of notification.
     const [body, setBody] = useState<string>("Stay active!"); // Body of notification.
     const updateSettings = useSettings((state) => state.setVals) // Hook to update the settings in the shared state.
     const intervalState = useSettings((state) => state.interval) // Interval from shared state.

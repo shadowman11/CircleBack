@@ -1,24 +1,18 @@
 {
   "expo": {
-    "name": "Health Circle",
+    "name": "Circle Back",
     "slug": "HealthCircle",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "healthcircle",
+    "scheme": "circleback",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/icon.png",
-        "backgroundImage": "./assets/images/icon.png",
-        "monochromeImage": "./assets/images/icon.png"
-      },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.HealthCircle"
+      "package": "com.anonymous.CircleBack"
     },
     "web": {
       "output": "static",
@@ -43,6 +37,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "22c98bbe-c9d8-4747-863c-7e1d57685f7a"
+      }
     }
   }
 }

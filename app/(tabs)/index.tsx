@@ -20,7 +20,7 @@ Notifications.setNotificationHandler({
 export default function HomeScreen() {
     const [active, setActive] = useState<boolean>(false); // Controls whether the notifications are running or not.
     const [interval, setInterval] = useState<string>("30"); // Interval between notification sends.
-    const [title, setTitle] = useState<string>("Reminder"); // Title of notification.
+    const [title, setTitle] = useState<string>("Time to circle back"); // Title of notification.
     const [body, setBody] = useState<string>("Stay active!"); // Body of notification.
     const updateSettings = useSettings((state) => state.setVals) // Hook to update the settings in the shared state.
     const intervalState = useSettings((state) => state.interval) // Interval from shared state.
@@ -42,7 +42,7 @@ export default function HomeScreen() {
             if (storedInterval && storedTimerLength && storedTitle && storedBody) {
                 updateSettings(storedInterval, storedTimerLength, storedTitle, storedBody);
             } else {
-                updateSettings("30", "60", "Reminder", "Stay active!");
+                updateSettings("30", "60", "Time to circle back", "Stay active!");
             }
         } catch (e) {
             alert(e);
