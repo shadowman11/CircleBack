@@ -1,31 +1,34 @@
 import { useEffect, useState } from 'react';
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import { save } from '../../components/storage';
 import { useSettings } from '../../components/useSettings';
 import { styles } from '@/components/styles'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 export default function SettingsScreen() {
-    const [interval, setInterval] = useState<string>("30");
-    const [timerLength, setTimerLength] = useState<string>("60");
-    const [title, setTitle] = useState<string>("Reminder");
-    const [body, setBody] = useState<string>("Stay active!");
-    const updateSettings = useSettings((state) => state.setVals)
-    const intervalState = useSettings((state) => state.interval)
-    const timerLengthState = useSettings((state) => state.timerLength)
-    const titleState = useSettings((state) => state.title)
-    const bodyState = useSettings((state) => state.body)
+    const [interval, setInterval] = useState<string>("30"); // Interval between notification sends.
+    const [timerLength, setTimerLength] = useState<string>("60"); // Length of timer.
+    const [title, setTitle] = useState<string>("Reminder"); // Title of notification.
+    const [body, setBody] = useState<string>("Stay active!"); // Body of notification.
+    const updateSettings = useSettings((state) => state.setVals) // Hook to update the settings in the shared state.
+    const intervalState = useSettings((state) => state.interval) // Interval from shared state.
+    const timerLengthState = useSettings((state) => state.timerLength) // Timer length from shared state.
+    const titleState = useSettings((state) => state.title) // Title from shared state.
+    const bodyState = useSettings((state) => state.body) // Body from shared state.
+    const [saveText, setSaveText] = useState<string>("SAVE"); // Save button text. 
 
-
+    // Saves the current settings to both the shared state and the Expo secure store.
     async function onSave() {
+        setSaveText("SAVED");
         updateSettings(interval, timerLength, title, body);
         save("interval", interval);
         save("timerLength", timerLength);
         save("title", title);
         save("body", body);
+        setTimeout(() => setSaveText("SAVE"), 3000)
     }
 
+    // Updates local values when shared state values change.
     useEffect(() => {
         setInterval(intervalState)
         setTimerLength(timerLengthState)
@@ -72,7 +75,7 @@ export default function SettingsScreen() {
                 style={styles.textInput}
             ></TextInput></View>
             <Pressable style={styles.actionButton} onPress={() => onSave()}>
-                <Text style={styles.buttonText}>SAVE</Text>
+                <Text style={styles.buttonText}>{saveText}</Text>
             </Pressable>
         </View>
     )

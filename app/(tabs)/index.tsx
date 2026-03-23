@@ -7,6 +7,7 @@ import { useSettings } from '../../components/useSettings';
 import { styles } from '@/components/styles'
 
 
+// Set notification settings.
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldPlaySound: true,
@@ -17,16 +18,17 @@ Notifications.setNotificationHandler({
 });
 
 export default function HomeScreen() {
-    const [active, setActive] = useState<boolean>(false);
-    const [interval, setInterval] = useState<string>("30");
-    const [title, setTitle] = useState<string>("Reminder");
-    const [body, setBody] = useState<string>("Stay active!");
-    const intervalState = useSettings((state) => state.interval)
-    const titleState = useSettings((state) => state.title)
-    const bodyState = useSettings((state) => state.body)
-    const updateSettings = useSettings((state) => state.setVals)
+    const [active, setActive] = useState<boolean>(false); // Controls whether the notifications are running or not.
+    const [interval, setInterval] = useState<string>("30"); // Interval between notification sends.
+    const [title, setTitle] = useState<string>("Reminder"); // Title of notification.
+    const [body, setBody] = useState<string>("Stay active!"); // Body of notification.
+    const updateSettings = useSettings((state) => state.setVals) // Hook to update the settings in the shared state.
+    const intervalState = useSettings((state) => state.interval) // Interval from shared state.
+    const titleState = useSettings((state) => state.title) // Title from shared state.
+    const bodyState = useSettings((state) => state.body) // Body from shared state.
     const router = useRouter();
     
+    // Gets values from Expo secure store and updates active variable and shared.
     async function getCurrentVals() {
         try {
             const storedActive = await getValueFor("active");
@@ -45,24 +47,29 @@ export default function HomeScreen() {
         }
     }
 
+    // Updates local values when shared state values change.
     useEffect(() => {
         setInterval(intervalState)
         setTitle(titleState)
         setBody(bodyState)
     }, [intervalState, titleState, bodyState])
     
+    // Runs on page load.
     useEffect(() => {
         getCurrentVals();
         
+        // Redirect to timer page if the app opened from a notification.
         Notifications.getLastNotificationResponseAsync().then(response => {
             if (!response) return;
             router.push("/(tabs)/timer");
         });
 
+        // Redirect to timer page if the app was already open and a notification was clicked.
         const subscription = Notifications.addNotificationResponseReceivedListener(response => {
             router.push("/(tabs)/timer");
         });
 
+        // Set notification channel for android.
         if (Platform.OS === "android") {
             Notifications.setNotificationChannelAsync("default", {
                 name: "default",
@@ -74,28 +81,26 @@ export default function HomeScreen() {
         return () => subscription.remove();
     }, []);
     
+    // Turns notifications on and off.
     async function onToggleActive() {
-        const curActive = active; // get current state of active variable to avoid concurrency issues
+        // Get current state of active variable to avoid concurrency issues with updating useState.
+        const curActive = active; 
         setActive(!curActive)
+        // Update in Expo secure store.
         save("active", (!curActive).toString())
 
         try {
             if (!curActive) {
-                const storedVals = await getCurrentVals();
-
-                if (!storedVals) throw new Error("Could not get stored values.")
-
                 Notifications.scheduleNotificationAsync({
                     content: {
-                        title: storedVals[2] ?? title,
-                        body: storedVals[3] ?? body,
+                        title: title,
+                        body: body,
                     },
                     trigger: {
                         type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-                        seconds: 60 * Number(storedVals[1] ?? interval),
+                        seconds: 60 * Number(interval),
                         repeats: true,
-                    },
-                    
+                    }
                 });
             } else {
                 Notifications.cancelAllScheduledNotificationsAsync();

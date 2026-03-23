@@ -1,18 +1,16 @@
-import { Text, Button, Platform, StyleSheet, View, Pressable } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
-import * as SecureStore from 'expo-secure-store';
-import { getValueFor } from '../../components/storage'
+import { Text, View, Pressable } from 'react-native';
+import { useState } from 'react';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { useSettings } from '@/components/useSettings';
 import { styles } from '@/components/styles'
 
 
 export default function TimerScreen() {
-    const [isPlaying, setIsPlaying] = useState<boolean>(false)
-    const [key, setKey] = useState<number>(0);
-    // const [timerLength, setTimerLength] = useState<string>("60");
-    const timerLength = useSettings((state) => state.timerLength)
+    const [isPlaying, setIsPlaying] = useState<boolean>(false) // Controls whether timer is counting down.
+    const [key, setKey] = useState<number>(0); // Sets the key of the timer. Changing the key restarts the timer.  
+    const timerLength = useSettings((state) => state.timerLength) // Timer length from shared state.
     
+    // Resets timer.
     function onReset() {
         setKey(key + 1)
         setIsPlaying(false)
