@@ -1,50 +1,25 @@
-# Welcome to your Expo app 👋
+# What is it?
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Most of us have unhealthily sedentary lifestyles and spend the majority of our day sitting down for long periods of time. Circle Back is a simple app that aims to make your day healthier, by allowing you to set reminders that prompt you to get active while you're sitting down. 
 
-## Get started
+Studies like [this one](https://pubmed.ncbi.nlm.nih.gov/36728338/) show that breaking up prolonged sitting with regular "exercise snacks" can significantly improve blood pressure and blood sugar, helping mitigate the detrimental effects of sedentary periods. In line with this, Circle Back sends you regular notifications whenever you turn it on, and has a timer that lets you keep track of how long your breaks are. 
 
-1. Install dependencies
+# Functionality
 
-   ```bash
-   npm install
-   ```
+## Notifications
 
-2. Start the app
+Simply press the big circular button on the home screen to start the notifications. You'll receive notifications at regular intervals. Then when you're done sitting, press the button again to turn the notifications off. 
 
-   ```bash
-   npx expo start
-   ```
+## Timer
 
-In the output, you'll find options to open the app in a
+Each notification takes you to the timer screen, where you can time your break. 
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Settings
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+The settings screen allows you to configure the notification interval, the timer length, and the notification content. 
 
-## Get a fresh project
+# Installation
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. Visit [this link](https://expo.dev/accounts/vashon/projects/HealthCircle/builds/029e278f-7ad2-406a-9fea-8f5341f5efdd) and download the Android apk file on your phone. 
+2. Open the file and allow it to install. 
+3. Give Circle Back notification permissions in Settings > Notifications > App Notifications > Circle Back > Allow Notifications (this path may vary depending on your version of Android)

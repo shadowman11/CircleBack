@@ -14,6 +14,7 @@ Notifications.setNotificationHandler({
         shouldSetBadge: false,
         shouldShowBanner: true,
         shouldShowList: true,
+        priority: Notifications.AndroidNotificationPriority.MAX
     }),
 });
 
@@ -73,7 +74,7 @@ export default function HomeScreen() {
 
         // Set notification channel for android.
         if (Platform.OS === "android") {
-            Notifications.setNotificationChannelAsync("default", {
+            Notifications.setNotificationChannelAsync("Interval Notifications", {
                 name: "default",
                 importance: Notifications.AndroidImportance.MAX,
                 lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
