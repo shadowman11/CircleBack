@@ -13,7 +13,10 @@
     "android": {
       "predictiveBackGestureEnabled": false,
       "package": "com.anonymous.CircleBack",
-      "permissions": ["USE_EXACT_ALARM", "SCHEDULE_EXACT_ALARM"]
+      "permissions": [
+        "USE_EXACT_ALARM",
+        "SCHEDULE_EXACT_ALARM"
+      ]
     },
     "web": {
       "output": "static",
@@ -34,7 +37,17 @@
         }
       ],
       "expo-secure-store",
-      "expo-audio"
+      "expo-audio",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification_icon.png"
+        }
+      ],
+      "expo-font",
+      "expo-image",
+      "expo-status-bar",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

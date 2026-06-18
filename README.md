@@ -18,8 +18,8 @@ Each notification takes you to the timer screen, where you can time your break.
 
 The settings screen allows you to configure the notification interval, the timer length, and the notification content. 
 
-# Installation
+# Installation (Android)
 
-1. Visit [this link](https://expo.dev/accounts/vashon/projects/HealthCircle/builds/029e278f-7ad2-406a-9fea-8f5341f5efdd) and download the Android apk file on your phone. 
+1. Visit [this link](https://drive.google.com/file/d/17Qv8brzfH3H4OvUQ5VDEwqLYIzBqnXm9/view?usp=drivesdk) and download the Android apk file on your phone. 
 2. Open the file and allow it to install. 
 3. Give Circle Back notification permissions in Settings > Notifications > App Notifications > Circle Back > Allow Notifications (this path may vary depending on your version of Android)

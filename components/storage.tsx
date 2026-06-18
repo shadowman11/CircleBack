@@ -3,9 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 // Returns value for given key from Expo secure store.
 async function getValueFor(key: string) {
     let result = await SecureStore.getItemAsync(key);
-    if (result) {
-        return result;
-    } 
+    return result;
 }
 
 // Saves the given key value pair in Expo secure store.

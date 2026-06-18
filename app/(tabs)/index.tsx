@@ -40,11 +40,7 @@ export default function HomeScreen() {
             
             setActive(storedActive === "true");
             
-            if (storedInterval && storedTimerLength && storedTitle && storedBody) {
-                updateSettings(storedInterval, storedTimerLength, storedTitle, storedBody);
-            } else {
-                updateSettings("30", "60", "Time to circle back", "Stay active!");
-            }
+            updateSettings(storedInterval ?? "30", storedTimerLength ?? "60", storedTitle ?? "Time to circle back", storedBody ?? "Stay active!");
         } catch (e) {
             alert(e);
         }
@@ -62,10 +58,10 @@ export default function HomeScreen() {
         getCurrentVals();
         
         // Redirect to timer page if the app opened from a notification.
-        Notifications.getLastNotificationResponseAsync().then(response => {
-            if (!response) return;
+        const response = Notifications.getLastNotificationResponse()
+        if (response) {
             router.push("/(tabs)/timer");
-        });
+        };
 
         // Redirect to timer page if the app was already open and a notification was clicked.
         const subscription = Notifications.addNotificationResponseReceivedListener(response => {
@@ -94,6 +90,7 @@ export default function HomeScreen() {
 
         try {
             if (!curActive) {
+                // If now active, schedule repeating notifications every interval minutes.
                 Notifications.scheduleNotificationAsync({
                     content: {
                         title: title,
@@ -106,12 +103,12 @@ export default function HomeScreen() {
                     }
                 });
             } else {
+                // If now inactive, cancel all notifications.
                 Notifications.cancelAllScheduledNotificationsAsync();
             }
         } catch (e) {
             alert(e);
         }
-        
     }
 
     return (
